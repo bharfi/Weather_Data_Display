@@ -1,0 +1,98 @@
+@startuml
+class MainPanel <extends JPanel>{
+    CardLayout cardLayout
+    DefaultPanel defaultPanel
+    AboutPanel aboutPanel
+    LoadDataPanel loadPanel
+    AddDataPanel addPanel
+    SaveDataPanel savePanel
+    PlotDataPanel plotPanel
+    ButtonGroup buttonsGroup
+    SelectionButtons buttonsPanel
+    MainPanel()
+    getButtonPanel():SelectionButtons
+    actionPerformed(ActionEvent):void
+}
+class DefaultPanel <extends JPanel>{
+    DefaultPanel()
+}
+class AboutPanel <extends JPanel>{
+    JLabel aboutLabel
+    AboutPanel()
+}
+class LoadDataPanel <extends JPanel>{
+    JLabel selectFileLabel
+    JTextField loadFileField
+    LoadDataPanel()
+}
+class AddDataPanel <extends JPanel>{
+    AddDataPanel()
+}
+class SaveDataPanel <extends JPanel>{
+    JLabel selectFileLabel
+    JTextField saveFileField
+    SaveDataPanel()
+}
+class PlotDataPanel <extends JPanel>{
+    PlotDataPanel()
+}
+interface ActionListener{
+    {abstract} +actionPerformed(ActionEvent):void
+}
+
+class MainWindow <extends JFrame>{
+    MainPanel mainPanel
+    MainWindow()
+    {static} +main(String[]):void
+}
+class SelectionButtons<extends JPanel>{
+    ButtonGroup buttonsGroup
+    ArrayList<JButton> buttons
+    BoxLayout boxLayout
+    SelectionButtons()
+    getButtonGroup():ButtonGroup
+    addActionListeners(ActionListener listener):void
+    addButton(String newButtText):void
+}
+class weatherData{
+    String cityName
+    String date;
+    int temperature
+    char typeDegree
+    weatherData(String name, String date, int temp, char degree)
+    getCityName():String
+    getDate():String
+    getTemperature():int
+    getTypeDegree():char
+}
+class CSVParser{
+    String fileName
+    String[] splitLine
+    weatherData[] weatherDataArray
+    parseReadFile(String givenFileName):void
+    getWeatherArray():weatherData[]
+}
+note left of MainPanel::"actionPerformed(ActionEvent)"
+     code for switching to every 
+     single panel; Clicking a button 
+     that is already selected brings 
+     you back to DefaultPanel.
+end note
+
+
+note top of DefaultPanel
+    every page has its own class,content
+    for each panel would be created in its
+    respective class
+end note
+MainWindow o-- MainPanel
+MainPanel *-- SelectionButtons
+MainPanel *-- AboutPanel
+MainPanel *-- LoadDataPanel
+MainPanel *-- AddDataPanel
+MainPanel *-- SaveDataPanel
+MainPanel *-- PlotDataPanel
+MainPanel *-- DefaultPanel
+ActionListener <|-- MainPanel
+@enduml
+
